@@ -11,7 +11,7 @@ import pickle
 import json
 from entities.train_pipeline_params import TrainingPipelineParams
 
-sklearn_model = Union[RandomForestClassifier, LogisticRegression]
+sklearn_model = Union[RandomForestClassifier, LogisticRegression, ColumnTransformer]
 
 
 def train_model(dataset: pd.DataFrame, target: pd.Series, train_params: TrainingPipelineParams) -> sklearn_model:
@@ -49,7 +49,7 @@ def create_inference_pipeline(model: sklearn_model, transformer: ColumnTransform
     return pipeline
 
 
-def serialize_model(model: sklearn_model, save_path: str):
+def serialize_artefact(model: sklearn_model, save_path: str):
     with open(save_path, 'wb') as file:
         pickle.dump(model, file)
 
@@ -81,7 +81,7 @@ if __name__ == "__main__":
     metrics = evaluate_model(preds, y_val)
 
     # print(metrics)
-    serialize_model(model, path_model_save)
+    serialize_artefact(model, path_model_save)
     save_metrics(metrics, path_model_metrics)
 
 

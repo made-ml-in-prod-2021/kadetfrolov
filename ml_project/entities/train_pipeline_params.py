@@ -13,6 +13,7 @@ class TrainingPipelineParams:
     splitting_params: SplittingParams
     feature_params: FeatureParams
     model: str
+    transformer_path: str
 
 
 TrainingPipelineParams_schema = class_schema(TrainingPipelineParams)

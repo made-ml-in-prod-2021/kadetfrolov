@@ -1,6 +1,7 @@
 input_data_path: "data/heart.csv"
 output_model_path: "models/model.pkl"
 metric_path: "models/metrics.json"
+transformer_path: "models/transformer.pkl"
 model: "RandomForestClassifier"
 splitting_params:
   val_size: 0.3

@@ -40,7 +40,9 @@ def run_train_pipeline(params: TrainingPipelineParams):
     metrics = evaluate_model(preds, y_val)
 
     logger.info(f'Scores: {metrics}')
-    serialize_model(model, params.output_model_path)
+    serialize_artefact(model, params.output_model_path)
+    serialize_artefact(transformer, params.transformer_path)
+
     save_metrics(metrics, params.metric_path)
 
     return params.output_model_path, metrics

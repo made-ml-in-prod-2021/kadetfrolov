@@ -15,3 +15,6 @@
 
 Запуск пайплайна линейной модели:
 ```python train_pipeline.py config/train_config_linear.yaml```
+
+Запуск предсказания модели:
+```python predict.py "models/model.pkl" "models/transformer.pkl" "data/heart.csv" "out.csv"```
