@@ -5,7 +5,7 @@
 Команды необходимо запускать из папки ml_project.
 
 Настройка окружения:
-* ```conda create -n .prod_hw1```
+* ```conda create -n .prod_hw1 python=3.7.10```
 * ```conda activate .prod_hw1```
 * ```conda install pip```
 * ```pip3 install -r requirements.txt```
@@ -18,3 +18,6 @@
 
 Запуск предсказания модели:
 ```python predict.py "models/model.pkl" "models/transformer.pkl" "data/heart.csv" "out.csv"```
+
+После пробного прогона удалите окружение:
+* ```conda env remove --name .prod_hw1```

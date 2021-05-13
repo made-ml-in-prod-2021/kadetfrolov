@@ -17,8 +17,6 @@ def split_train_val_data(data: pd.DataFrame, split_params: SplittingParams) -> T
 
 
 if __name__ == '__main__':
-    # TODO разобраться с относительными импортами в "from .split_params import SplittingParams"
-    # файла train_pipeline_params
     from entities.train_pipeline_params import read_training_pipeline_params
     params = read_training_pipeline_params('../config/train_config_forest.yaml')
     path = 'heart.csv'

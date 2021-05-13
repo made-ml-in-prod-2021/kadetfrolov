@@ -2,7 +2,6 @@ async-generator==1.10
 async-timeout==3.0.1
 backports.functools-lru-cache==1.6.1
 blinker==1.4
-brotlipy==0.7.0
 cachetools==4.2.2
 certifi==2020.12.5
 cffi==1.14.5
