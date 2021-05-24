@@ -1,0 +1,61 @@
+from typing import Union, Dict
+import sklearn
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.linear_model import LogisticRegression
+from sklearn.pipeline import Pipeline
+from sklearn.metrics import accuracy_score, roc_auc_score, f1_score, precision_score, recall_score
+from sklearn.compose import ColumnTransformer
+import pandas as pd
+import numpy as np
+import pickle
+import json
+from entities.train_pipeline_params import TrainingPipelineParams
+
+sklearn_model = Union[RandomForestClassifier, LogisticRegression, ColumnTransformer]
+
+
+def train_model(dataset: pd.DataFrame, target: pd.Series, train_params: TrainingPipelineParams) -> sklearn_model:
+    model_name = train_params.model
+    if model_name == 'RandomForestClassifier':
+        model = RandomForestClassifier()
+    elif model_name == 'LogisticRegression':
+        model = LogisticRegression()
+    else:
+        raise NotImplementedError
+    model.fit(dataset, target)
+    return model
+
+
+def predict_model(pipeline: Pipeline, dataset: pd.DataFrame) -> np.ndarray:
+    result = pipeline.predict(dataset)
+    return result
+
+
+def evaluate_model(predictions: np.ndarray, target: pd.Series) -> Dict[str, float]:
+    result = {'accuracy': round(accuracy_score(target, predictions), 4),
+              'roc_auc': round(roc_auc_score(target, predictions), 4),
+              'f1': round(f1_score(target, predictions), 4),
+              'precision': round(precision_score(target, predictions), 4),
+              'recall': round(recall_score(target, predictions), 4)}
+    return result
+
+
+def create_inference_pipeline(model: sklearn_model, transformer: ColumnTransformer) -> Pipeline:
+    # Pipeline of transforms with a final estimator.
+    # Sequentially apply a list of transforms and a final estimator.
+    # Intermediate steps of the pipeline must be ‘transforms’,
+    # that is, they must implement fit and transform methods. The final estimator only needs to implement fit.
+    pipeline = Pipeline([('feature_part', transformer), ('model_part', model)])
+    return pipeline
+
+
+def serialize_artefact(model: sklearn_model, save_path: str):
+    with open(save_path, 'wb') as file:
+        pickle.dump(model, file)
+
+
+def save_metrics(metrics: dict, save_path: str):
+    with open(save_path, 'w') as file:
+        json.dump(metrics, file)
+
+
